@@ -1,3 +1,3 @@
 FROM dunglas/frankenphp
 
-COPY . /app/public
+COPY . /app
