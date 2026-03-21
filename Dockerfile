@@ -3,7 +3,7 @@ FROM dunglas/frankenphp:latest
 WORKDIR /app
 
 # Permitir composer como root (importante en Docker)
-# ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Instalar extensiones necesarias para Laravel
 RUN install-php-extensions \
