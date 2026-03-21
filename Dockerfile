@@ -17,7 +17,7 @@ RUN install-php-extensions \
 COPY . /app
 
 # Instalar composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Instalar dependencias
 RUN composer install --no-dev --optimize-autoloader --no-interaction
@@ -26,6 +26,6 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN chmod -R 775 storage bootstrap/cache
 
 # Copiar configuración de FrankenPHP (Caddy)
-COPY Caddyfile /etc/frankenphp/Caddyfile
+# COPY Caddyfile /etc/frankenphp/Caddyfile
 
 EXPOSE 80
