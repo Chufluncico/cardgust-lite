@@ -33,13 +33,17 @@ FROM dunglas/frankenphp:latest
 
 WORKDIR /app
 
-# copiar app
-COPY --from=php /app /app
+# MUY IMPORTANTE: instalar otra vez aquí
+RUN install-php-extensions \
+    pdo_mysql \
+    mbstring \
+    bcmath \
+    gd \
+    zip
 
-# copiar assets
+COPY --from=php /app /app
 COPY --from=node /app/public/build /app/public/build
 
-# AQUÍ VA (IMPORTANTE)
 COPY Caddyfile /etc/frankenphp/Caddyfile
 
 RUN chmod -R 775 storage bootstrap/cache
