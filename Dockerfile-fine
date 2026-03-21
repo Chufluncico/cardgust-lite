@@ -1,4 +1,4 @@
-# ---------- PHP (composer) ----------
+# ---------- PHP ----------
 FROM dunglas/frankenphp:latest AS php
 
 WORKDIR /app
@@ -10,9 +10,7 @@ RUN install-php-extensions \
     mbstring \
     bcmath \
     gd \
-    zip \
-    intl \
-    opcache
+    zip
 
 COPY . /app
 
@@ -20,7 +18,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# ---------- NODE (vite build) ----------
+# ---------- NODE ----------
 FROM node:20 AS node
 
 WORKDIR /app
@@ -35,15 +33,13 @@ FROM dunglas/frankenphp:latest
 
 WORKDIR /app
 
-# instalar extensiones también aquí
+# MUY IMPORTANTE: instalar otra vez aquí
 RUN install-php-extensions \
     pdo_mysql \
     mbstring \
     bcmath \
     gd \
-    zip \
-    intl \
-    opcache
+    zip
 
 COPY --from=php /app /app
 COPY --from=node /app/public/build /app/public/build
@@ -53,5 +49,3 @@ COPY Caddyfile /etc/frankenphp/Caddyfile
 RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
-
-CMD ["frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile"]
