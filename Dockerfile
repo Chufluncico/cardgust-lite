@@ -1,15 +1,13 @@
-# ---------- STAGE 1: Node ----------
+# Node build
 FROM node:20 AS node
 
 WORKDIR /app
-
 COPY package*.json ./
 RUN npm install
-
 COPY . .
 RUN npm run build
 
-# ---------- STAGE 2: PHP ----------
+# PHP
 FROM dunglas/frankenphp:latest
 
 WORKDIR /app
@@ -24,8 +22,6 @@ RUN install-php-extensions \
     zip
 
 COPY . /app
-
-# copiar assets compilados
 COPY --from=node /app/public/build /app/public/build
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
