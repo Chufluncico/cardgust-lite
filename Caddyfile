@@ -2,7 +2,7 @@
     frankenphp
 }
 
-0.0.0.0:80 {
+:80 {
     root * /app/public
 
     encode zstd br gzip
