@@ -27,3 +27,5 @@ RUN chmod -R 775 storage bootstrap/cache
 
 # Copiar configuración de FrankenPHP (Caddy)
 COPY Caddyfile /etc/frankenphp/Caddyfile
+
+EXPOSE 80
