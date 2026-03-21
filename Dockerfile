@@ -1,4 +1,4 @@
-# ---------- PHP (composer primero) ----------
+# ---------- PHP ----------
 FROM dunglas/frankenphp:latest AS php
 
 WORKDIR /app
@@ -10,8 +10,7 @@ RUN install-php-extensions \
     mbstring \
     bcmath \
     gd \
-    zip \
-    intl
+    zip
 
 COPY . /app
 
@@ -34,8 +33,14 @@ FROM dunglas/frankenphp:latest
 
 WORKDIR /app
 
+# copiar app
 COPY --from=php /app /app
+
+# copiar assets
 COPY --from=node /app/public/build /app/public/build
+
+# AQUÍ VA (IMPORTANTE)
+COPY Caddyfile /etc/frankenphp/Caddyfile
 
 RUN chmod -R 775 storage bootstrap/cache
 
