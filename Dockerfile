@@ -1,4 +1,4 @@
-# ---------- STAGE 1: PHP (composer) ----------
+# ---------- PHP (composer primero) ----------
 FROM dunglas/frankenphp:latest AS php
 
 WORKDIR /app
@@ -10,7 +10,8 @@ RUN install-php-extensions \
     mbstring \
     bcmath \
     gd \
-    zip
+    zip \
+    intl
 
 COPY . /app
 
@@ -18,7 +19,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# ---------- STAGE 2: NODE ----------
+# ---------- NODE ----------
 FROM node:20 AS node
 
 WORKDIR /app
@@ -28,7 +29,7 @@ COPY --from=php /app /app
 RUN npm install
 RUN npm run build
 
-# ---------- STAGE FINAL ----------
+# ---------- FINAL ----------
 FROM dunglas/frankenphp:latest
 
 WORKDIR /app
