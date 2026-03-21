@@ -3,7 +3,7 @@ FROM dunglas/frankenphp:latest
 WORKDIR /app
 
 # Permitir composer como root (importante en Docker)
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Instalar extensiones necesarias para Laravel
 RUN install-php-extensions \
@@ -20,7 +20,7 @@ COPY . /app
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Instalar dependencias
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN composer install --dev --optimize-autoloader --no-interaction --prefer-dist
 
 # Permisos necesarios para Laravel
 RUN chmod -R 775 storage bootstrap/cache
