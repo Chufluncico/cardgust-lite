@@ -38,8 +38,8 @@ echo "Limpiando caches..."
 php artisan optimize:clear
 
 # (opcional, puedes activar luego)
-# php artisan config:cache
-# php artisan route:cache
-# php artisan view:cache
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 echo "Post-deploy completado"
