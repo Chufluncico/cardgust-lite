@@ -52,7 +52,11 @@ COPY --from=node /app/public/build /app/public/build
 
 COPY Caddyfile /etc/frankenphp/Caddyfile
 
-RUN chmod -R 775 storage bootstrap/cache
+# RUN chmod -R 775 storage bootstrap/cache
+
+# permisos Laravel (IMPORTANTE pero no suficiente para volumen)
+RUN chown -R www-data:www-data /app \
+    && chmod -R 775 /app/storage /app/bootstrap/cache
 
 EXPOSE 80
 
