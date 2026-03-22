@@ -12,7 +12,8 @@ RUN install-php-extensions \
     gd \
     zip \
     intl \
-    opcache
+    opcache \
+    redis
 
 COPY . /app
 
@@ -43,7 +44,8 @@ RUN install-php-extensions \
     gd \
     zip \
     intl \
-    opcache
+    opcache \
+    redis
 
 COPY --from=php /app /app
 COPY --from=node /app/public/build /app/public/build
